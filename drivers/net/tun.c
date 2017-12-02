@@ -2518,6 +2518,18 @@ static long __tun_chr_ioctl(struct file *file, unsigned int cmd,
 			break;
 		ret = 0;
 		break;
+        
+    case TUNSETCARRIER:
+        if (arg) {
+            netif_carrier_on(tun->dev);
+		} else {
+            netif_carrier_off(tun->dev);
+        }
+
+		tun_debug(KERN_INFO, tun, "carrier %s\n",
+			  arg ? "on" : "off");
+
+		break;
 
 	default:
 		ret = -EINVAL;
